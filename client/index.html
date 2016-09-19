@@ -52,23 +52,23 @@
 </div>
 
 <div class="container-fluid">
-	<div class="row" ng-repeat="x in category">
+	<div class="row" ng-repeat="x in categories">
     <div class="panel panel-default">
-        <div class="panel-heading"><h3>{{x.name}}</h3></div>
+        <div class="panel-heading"><h4><strong>{{x.categoryname}}</strong></h4></div>
         <div class="panel-body">
         	<!-- items per category -->
             <div class="container-fluid">
             	<div class="row">
-                	<div class="col-md-6 col-sm-12 " ng-repeat="y in item | filter: x.name">
+                	<div class="col-md-6 col-sm-12 " ng-repeat="y in item | filter: y.categoryname=x.categoryname">
                     	<div class="panel panel-default">
                             <div class="panel-heading">
                                 <h3 class="panel-title">{{y.name}}</h3>
                             </div>
                             <div class="panel-body">
-                                <p>{{y.descrip}}</p>
+                                <p>{{y.description}}</p>
                                 <p>for only {{y.price}}</p>
                                 <div class="alert alert-success" role="alert">{{y.status}}</div>
-                                <button type="button" class="btn btn-primary glyphicon glyphicon-play-circle"></button>
+                                <button type="button" class="btn btn-primary glyphicon glyphicon-play-circle"> ADD to Cart</button>
                             </div>
                         </div>
                     </div>
@@ -80,6 +80,5 @@
 </div>
 </div>
 
-</div>
 </body>
 </html>

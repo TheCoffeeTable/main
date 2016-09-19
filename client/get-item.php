@@ -1,10 +1,8 @@
-<!doctype html>
-<html>
-<head>
-<meta charset="utf-8">
-<title>Untitled Document</title>
-</head>
-
-<body>
-</body>
-</html>
+<?php
+	require_once("../libs/connection/PHPpdo.php");
+	$db = new DatabaseConnect();
+	$db->query("CALL `get-items`");
+	$x = $db->resultset();
+	$js = json_encode($x);
+	echo $js;
+?>
