@@ -52,20 +52,22 @@
 </div>
 
 <div class="container-fluid">
-	<div class="row">
+	<div class="row" ng-repeat="x in category">
     <div class="panel panel-default">
-        <div class="panel-heading"><h3>Category Title</h3></div>
+        <div class="panel-heading"><h3>{{x.name}}</h3></div>
         <div class="panel-body">
         	<!-- items per category -->
             <div class="container-fluid">
             	<div class="row">
-                	<div class="col-md-6 col-sm-12 ">
+                	<div class="col-md-6 col-sm-12 " ng-repeat="y in item | filter: x.name">
                     	<div class="panel panel-default">
                             <div class="panel-heading">
-                                <h3 class="panel-title">Item Title</h3>
+                                <h3 class="panel-title">{{y.name}}</h3>
                             </div>
                             <div class="panel-body">
-                                Panel content
+                                <p>{{y.descrip}}</p>
+                                <p>for only {{y.price}}</p>
+                                <div class="alert alert-success" role="alert">{{y.status}}</div>
                             </div>
                         </div>
                     </div>

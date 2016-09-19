@@ -8,6 +8,6 @@ app.controller('CoffeeCtrl',function($scope,$http){
 	
 	$http.get("get-item.php")
 		.then(function(response) {
-			$scope.data = response.data;
+			$scope.item = response.data;
 	});
 });
