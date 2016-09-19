@@ -99,11 +99,11 @@ CREATE TABLE IF NOT EXISTS `tbl_items` (
 DELETE FROM `tbl_items`;
 /*!40000 ALTER TABLE `tbl_items` DISABLE KEYS */;
 INSERT INTO `tbl_items` (`itemno`, `status`, `name`, `categoryname`, `description`, `price`, `imgURL`) VALUES
-	(1, 'AVAILABLE', 'asd', 'asd', 'dsd', 19.00, 'yui'),
-	(2, 'AVAILABLE', 'qqq', '123', 'dsd', 19.00, 'kjl'),
-	(3, 'AVAILABLE', 'ghjgh', 'asd', 'dsd', 19.00, 'vbn'),
-	(4, 'AVAILABLE', 'ghjgh', '123', 'dsd', 19.00, 'qwe'),
-	(5, 'AVAILABLE', 'ghjgh', '123', 'dsd', 19.00, 'zx');
+	(1, 'AVAILABLE', 'asd', 'asd', 'dsd', 19.00, 'pasta'),
+	(2, 'AVAILABLE', 'qqq', '123', 'dsd', 19.00, 'special'),
+	(3, 'AVAILABLE', 'ghjgh', 'asd', 'dsd', 19.00, 'bananasplit'),
+	(4, 'AVAILABLE', 'ghjgh', '123', 'dsd', 19.00, 'shakes'),
+	(5, 'AVAILABLE', 'ghjgh', '123', 'dsd', 19.00, 'sandwich');
 /*!40000 ALTER TABLE `tbl_items` ENABLE KEYS */;
 
 

@@ -17,6 +17,19 @@
  <nav class="navbar navbar-default navbar-fixed-top">
 	   
   <div class="container">
+  <script type="text/ng-template" id="myPopoverTemplate.html">
+        <div id="cart">
+			
+			<ul ng-repeat="x in order">
+				<li class="text-warning text-align-left">{{x.name}} -- {{x.qty}} -- {{x.price}}  <button class="btn btn-xs btn-danger glyphicon glyphicon-minus-sign" ng-click="removeItem($index)"></button>
+				</li>
+			</ul>
+			<hr>
+			<button class="btn btn-sm btn-primary">ORDER NOW!</button>
+			
+			
+		</div>
+    </script>
 
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
@@ -31,14 +44,17 @@
 
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav">
-                
-      </ul>
+      
       <form class="navbar-form navbar-left" role="search">
         <div class="form-group">
-          <input type="text" class="form-control" placeholder="Search">
+          <input type="text" ng-model="query" class="form-control" placeholder="Search">
         </div>
       </form>
+      <ul class="nav navbar-nav">
+      <li>
+          <a class="glyphicon glyphicon-erase" ng-click="query=''"></a>
+      </li>
+      </ul>
       <ul class="nav navbar-nav navbar-right">
         
         
@@ -52,23 +68,37 @@
 </div>
 
 <div class="container-fluid">
-	<div class="row" ng-repeat="x in categories">
+	<div class="row" ng-repeat="x in categories | filter: query">
     <div class="panel panel-default">
         <div class="panel-heading"><h4><strong>{{x.categoryname}}</strong></h4></div>
         <div class="panel-body">
         	<!-- items per category -->
             <div class="container-fluid">
+            	<button uib-popover-template="dynamicPopover.templateUrl" popover-placement="bottom" popover-title="Your Order List:" type="button" class="btn btn-warning" style="top:12%;right:7%; position:fixed">CART</button>
             	<div class="row">
-                	<div class="col-md-6 col-sm-12 " ng-repeat="y in item | filter: y.categoryname=x.categoryname">
+                	<div class="col-md-6 col-sm-12 " ng-repeat="y in item | filter: y.categoryname=x.categoryname | filter: query">
                     	<div class="panel panel-default">
                             <div class="panel-heading">
                                 <h3 class="panel-title">{{y.name}}</h3>
+                                  
                             </div>
                             <div class="panel-body">
-                                <p>{{y.description}}</p>
-                                <p>for only {{y.price}}</p>
-                                <div class="alert alert-success" role="alert">{{y.status}}</div>
-                                <button type="button" class="btn btn-primary glyphicon glyphicon-play-circle"> ADD to Cart</button>
+                            	<div class="col-md-6">
+                                	<img ng-src="../libs/img/{{y.imgURL}}.jpg" class="img-responsive" width="200px" height="200px"/>
+                                </div><div class="col-md-6">
+                                    <p>{{y.description}}</p>
+                                    <p>for only {{y.price}}</p>
+                                    <p>{{y.price}} X {{qty}} -- <strong>{{y.price * qty}}.00</strong></p>
+                                    Quantity: <input style="width:60px;" type="number" ng-model="qty" ng-init="qty = 1"/>
+                                </div>
+                                <div class="col-md-12">
+                                	<div class="alert alert-success" role="alert">{{y.status}}</div>
+                                </div>
+                                <div class="col-md-6 col-mf-offset-3">
+                                	<button type="button" ng-click="addItem(y.itemno,y.name,qty,y.price*qty)" class="btn btn-primary glyphicon glyphicon-play-circle"> ADD to Cart</button>
+                                </div>
+                                
+                                
                             </div>
                         </div>
                     </div>
