@@ -5,7 +5,7 @@ $request = json_decode($postdata);
 
 foreach($request as $r)
 {
-	$db->query("INSERT into tbl_orders(`TableNo`,`itemno`,`name`,`qty`,`price`)VALUES(?,?,?,?,?)");
+	$db->query("INSERT into tbl_orders(`TableNo`,`productNo`,`name`,`qty`,`price`)VALUES(?,?,?,?,?)");
 	$db->bind(1,$r->tblno);
 	$db->bind(2,$r->name);
 	$db->bind(3,$r->itemno);
