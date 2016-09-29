@@ -24,11 +24,10 @@
 					<td>&times; {{x.qty}}&nbsp;&nbsp;</td>
 					<td>{{x.price | currency : "&#8369; "}}&nbsp;&nbsp;</td>
 					<td><button class="btn btn-xs btn-danger glyphicon glyphicon-minus-sign" ng-click="removeItem($index)"></button></td>
-					{{prize}}
 				</tr>
 				<tr class="text-warning text-align-left">
 					<td colspan="2"><right>A Total of :</right></td>
-					<td>{{total}}</td>
+					<td>{{total| currency : "&#8369; "}}</td>
 				</tr>
 			</table>	
 			<hr>

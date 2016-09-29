@@ -36,6 +36,7 @@ app.controller('CoffeeCtrl',function($scope,$http){
 			.success(function(data){
 			window.alert("Thank you for Ordering!Please wait for the server to respond for your order.");
 			$scope.order = [];
+			$scope.total = 0;
 		});
 	};
 	
