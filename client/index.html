@@ -16,16 +16,23 @@
 <div class="container" ng-app="CoffeeApp" ng-controller="CoffeeCtrl">
  <nav class="navbar navbar-default navbar-fixed-top">
 	   
-  <div class="container">
   <script type="text/ng-template" id="myPopoverTemplate.html">
         <div id="cart">
-			
-			<ul ng-repeat="x in order">
-				<li class="text-warning text-align-left">{{x.name}} -- {{x.qty}} -- {{x.price}}  <button class="btn btn-xs btn-danger glyphicon glyphicon-minus-sign" ng-click="removeItem($index)"></button>
-				</li>
-			</ul>
+			<table>
+				<tr class="text-warning text-align-left" ng-repeat="x in order">
+					<td>{{x.name}}&nbsp;&nbsp;</td>
+					<td>&times; {{x.qty}}&nbsp;&nbsp;</td>
+					<td>{{x.price | currency : "&#8369; "}}&nbsp;&nbsp;</td>
+					<td><button class="btn btn-xs btn-danger glyphicon glyphicon-minus-sign" ng-click="removeItem($index)"></button></td>
+					{{prize}}
+				</tr>
+				<tr class="text-warning text-align-left">
+					<td colspan="2"><right>A Total of :</right></td>
+					<td>{{total}}</td>
+				</tr>
+			</table>	
 			<hr>
-			<button class="btn btn-sm btn-primary">ORDER NOW!</button>
+			<button class="btn btn-sm btn-primary" ng-click="orderNow()">ORDER NOW!</button>
 			
 			
 		</div>
@@ -60,7 +67,6 @@
         
       </ul>
     </div><!-- /.navbar-collapse -->
-  </div><!-- /.container-fluid -->
 </nav>
 <br><br><br><br>
 <div class="page-header">
@@ -95,7 +101,7 @@
                                 	<div class="alert alert-success" role="alert">{{y.status}}</div>
                                 </div>
                                 <div class="col-md-6 col-mf-offset-3">
-                                	<button type="button" ng-click="addItem(y.itemno,y.name,qty,y.price*qty)" class="btn btn-primary glyphicon glyphicon-play-circle"> ADD to Cart</button>
+                                	<button type="button" ng-click="addItem(y.itemno,y.name,qty,y.price*qty,TableNumber)" class="btn btn-primary glyphicon glyphicon-play-circle"> ADD to Cart</button>
                                 </div>
                                 
                                 

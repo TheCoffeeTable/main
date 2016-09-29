@@ -1,6 +1,8 @@
 'use strict';
 var app = angular.module('CoffeeApp',['ui.bootstrap']);
 app.controller('CoffeeCtrl',function($scope,$http){
+	$scope.TableNumber=1;
+	$scope.total = 0;
 	$http.get("get-category.php")
 		.then(function(response) {
 			$scope.categories = response.data;
@@ -12,9 +14,10 @@ app.controller('CoffeeCtrl',function($scope,$http){
 	});
 	
 	$scope.order = [];
-	$scope.addItem = function(w,x,y,z){
-		$scope.order.push({itemno:x,name:x,qty:y,price:z});
-		console.log($scope.order);
+	$scope.addItem = function(w,x,y,z,t){
+		$scope.order.push({itemno:w,name:x,qty:y,price:z,tblno:t});
+		
+		$scope.total = $scope.total + z;
 	};
 	
 	$scope.dynamicPopover = {
@@ -23,6 +26,17 @@ app.controller('CoffeeCtrl',function($scope,$http){
 	  };
 
 	$scope.removeItem = function(e){
+		console.log($scope.order[e].price)
+		$scope.total = $scope.total - $scope.order[e].price;
 		$scope.order.splice(e, 1);
-	}
+	};
+	
+	$scope.orderNow = function(){
+		$http.post('i-order.php', $scope.order) 
+			.success(function(data){
+			window.alert("Thank you for Ordering!Please wait for the server to respond for your order.");
+			$scope.order = [];
+		});
+	};
+	
 });
