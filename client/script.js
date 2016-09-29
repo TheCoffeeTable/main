@@ -1,5 +1,5 @@
 'use strict';
-var app = angular.module('CoffeeApp',['ui.bootstrap']);
+var app = angular.module('CoffeeApp',['ui.bootstrap','ngRateIt']);
 app.controller('CoffeeCtrl',function($scope,$http){
 	$scope.TableNumber=1;
 	$scope.total = 0;

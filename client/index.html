@@ -5,11 +5,13 @@
 <link rel="stylesheet" type="text/css" href="../libs/css/bootstrap-paper.css">
 <link rel="stylesheet" type="text/css" href="custom.css">
 <link rel="stylesheet" type="text/css" href="custom2.css">
+<link rel="stylesheet" type="text/css" href="../libs/css/ng-rateit.css">
 <link rel="stylesheet" type="text/css" href="bg.css">
 <script src="../libs/js/angular.min.js"></script>
 <script src="../libs/js/angular-route.min.js"></script>
 <script src="../libs/js/angular-animate.min.js"></script>
 <script src="../libs/js/ui-bootstrap.min.js"></script>
+<script src="../libs/js/ng-rateit.min.js"></script>
 <script src="script.js"></script>
 </head>
 <body>
@@ -79,7 +81,7 @@
         <div class="panel-body">
         	<!-- items per category -->
             <div class="container-fluid">
-            	<button uib-popover-template="dynamicPopover.templateUrl" popover-placement="bottom" popover-title="Your Order List:" type="button" class="btn btn-warning" style="top:12%;right:7%; position:fixed">CART</button>
+            	<button uib-popover-template="dynamicPopover.templateUrl" popover-placement="bottom" popover-title="Your Order List:" type="button" class="btn btn-warning" style="top:12%;right:7%; position:fixed;z-index:999">CART</button>
             	<div class="row">
                 	<div class="col-md-6 col-sm-12 " ng-repeat="y in item | filter: y.categoryname=x.categoryname | filter: query">
                     	<div class="panel panel-default">
@@ -99,8 +101,15 @@
                                 <div class="col-md-12">
                                 	<div class="alert alert-success" role="alert">{{y.status}}</div>
                                 </div>
-                                <div class="col-md-6 col-mf-offset-3">
+                                <div class="col-md-6 ">
                                 	<button type="button" ng-click="addItem(y.itemno,y.name,qty,y.price*qty,TableNumber)" class="btn btn-primary glyphicon glyphicon-play-circle"> ADD to Cart</button>
+                                   
+                                </div>
+                                <br>
+                                <div class="col-md-4">
+                                	<p>Rate me : </p><ng-rate-it ng-model=""
+                                        >
+                                    </ng-rate-it>
                                 </div>
                                 
                                 
