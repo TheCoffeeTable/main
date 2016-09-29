@@ -27,9 +27,10 @@
 					<td>{{x.price | currency : "&#8369; "}}&nbsp;&nbsp;</td>
 					<td><button class="btn btn-xs btn-danger glyphicon glyphicon-minus-sign" ng-click="removeItem($index)"></button></td>
 				</tr>
+				<hr class="text-warning">
 				<tr class="text-warning text-align-left">
 					<td colspan="2"><right>A Total of :</right></td>
-					<td>{{total| currency : "&#8369; "}}</td>
+					<td><strong>{{total| currency : "&#8369; "}}</strong></td>
 				</tr>
 			</table>	
 			<hr>
@@ -91,7 +92,7 @@
                             </div>
                             <div class="panel-body">
                             	<div class="col-md-6">
-                                	<img ng-src="../libs/img/{{y.imgURL}}.jpg" class="img-responsive" width="200px" height="200px"/>
+                                	<img uib-popover="Try me!" popover-trigger="'mouseenter'" ng-src="../libs/img/{{y.imgURL}}.jpg" class="img-responsive" width="200px" height="200px"/>
                                 </div><div class="col-md-6">
                                     <p>{{y.description}}</p>
                                     <p>for only {{y.price}}</p>
