@@ -108,11 +108,9 @@
                                 </div>
                                 <br>
                                 <div class="col-md-4">
-                                	<p>Rate me : </p><ng-rate-it ng-model=""
-                                        >
-                                    </ng-rate-it>
+                                	<p>Rate me : </p><ng-rate-it ng-model="rate" rated="rateItem(y.itemno,rate)"></ng-rate-it>
+                                    {{rate}}
                                 </div>
-                                
                                 
                             </div>
                         </div>

@@ -39,5 +39,13 @@ app.controller('CoffeeCtrl',function($scope,$http){
 			$scope.total = 0;
 		});
 	};
+
+	$scope.rateItem = function(x,y){
+		$http.post('rate.php', {itemno:x,rate:y}) 
+			.success(function(data){
+			window.alert("Great! Thank you for rating me!");
+			window.location.reload();
+		});
+	}
 	
 });
