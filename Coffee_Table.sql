@@ -32,7 +32,11 @@ DROP PROCEDURE IF EXISTS `get-items`;
 DELIMITER //
 CREATE DEFINER=`root`@`localhost` PROCEDURE `get-items`()
 BEGIN
-	SELECT * from tbl_product order by categoryname asc;
+	SELECT * from tbl_product as p
+	left join tbl_rate as r
+	on
+	p.itemno = r.itemno
+	order by categoryname asc;
 END//
 DELIMITER ;
 
@@ -45,6 +49,19 @@ BEGIN
 	SELECT * from tbl_orders WHERE TableNo = tableNumber order by name asc;
 	
 	/** you should not miss this part ..maraming developers d marunong gumamit neto**/
+END//
+DELIMITER ;
+
+
+-- Dumping structure for procedure the_coffee_table.rater
+DROP PROCEDURE IF EXISTS `rater`;
+DELIMITER //
+CREATE DEFINER=`root`@`localhost` PROCEDURE `rater`(IN `xitem` VARCHAR(50), IN `xrate` FLOAT)
+BEGIN
+	update tbl_rate set rateCount = rateCount + 1 WHERE itemno = xitem limit 1;
+	update tbl_rate set totalRate = totalRate + xrate WHERE itemno = xitem limit 1;
+	update tbl_rate set maxRate = (ratecount*5) WHERE itemno = xitem limit 1;
+	update tbl_rate set percentage = ((totalRate/maxRate)*100)/20 WHERE itemno = xitem limit 1;
 END//
 DELIMITER ;
 
@@ -108,9 +125,9 @@ CREATE TABLE IF NOT EXISTS `tbl_orders` (
   `qty` int(11) DEFAULT NULL,
   `price` decimal(10,2) DEFAULT NULL,
   PRIMARY KEY (`orderNo`)
-) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
 
--- Dumping data for table the_coffee_table.tbl_orders: 8 rows
+-- Dumping data for table the_coffee_table.tbl_orders: 15 rows
 /*!40000 ALTER TABLE `tbl_orders` DISABLE KEYS */;
 INSERT IGNORE INTO `tbl_orders` (`orderNo`, `TableNo`, `productNo`, `name`, `qty`, `price`) VALUES
 	(1, 1, 'qqq', NULL, 1, 19.00),
@@ -120,7 +137,14 @@ INSERT IGNORE INTO `tbl_orders` (`orderNo`, `TableNo`, `productNo`, `name`, `qty
 	(5, 1, 'qqq', '2', 1, 19.00),
 	(6, 1, 'ghjgh', '4', 1, 19.00),
 	(7, 1, 'ghjgh', '5', 1, 19.00),
-	(8, 1, 'asd', '1', 1, 19.00);
+	(8, 1, 'asd', '1', 1, 19.00),
+	(9, 1, 'qqq', '2', 1, 19.00),
+	(10, 1, 'ghjgh', '4', 1, 19.00),
+	(11, 1, '2', 'qqq', 1, 19.00),
+	(12, 1, '4', 'ghjgh', 1, 19.00),
+	(13, 1, '5', 'ghjgh', 1, 19.00),
+	(14, 1, '18', 'Hot Choco', 1, 15.00),
+	(15, 1, '20', 'Sandwich', 1, 25.00);
 /*!40000 ALTER TABLE `tbl_orders` ENABLE KEYS */;
 
 
@@ -133,19 +157,43 @@ CREATE TABLE IF NOT EXISTS `tbl_product` (
   `categoryname` varchar(50) NOT NULL,
   `description` varchar(50) NOT NULL,
   `price` decimal(10,2) NOT NULL,
-  `imgURL` varchar(50) NOT NULL,
-  PRIMARY KEY (`itemno`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+  `imgURL` text,
+  PRIMARY KEY (`itemno`),
+  KEY `itemno` (`itemno`)
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
 
--- Dumping data for table the_coffee_table.tbl_product: 5 rows
+-- Dumping data for table the_coffee_table.tbl_product: ~5 rows (approximately)
 /*!40000 ALTER TABLE `tbl_product` DISABLE KEYS */;
 INSERT IGNORE INTO `tbl_product` (`itemno`, `status`, `name`, `categoryname`, `description`, `price`, `imgURL`) VALUES
-	(1, 'AVAILABLE', 'asd', 'asd', 'dsd', 19.00, 'pasta'),
-	(2, 'AVAILABLE', 'qqq', '123', 'dsd', 19.00, 'special'),
-	(3, 'AVAILABLE', 'ghjgh', 'asd', 'dsd', 19.00, 'bananasplit'),
-	(4, 'AVAILABLE', 'ghjgh', '123', 'dsd', 19.00, 'shakes'),
-	(5, 'AVAILABLE', 'ghjgh', '123', 'dsd', 19.00, 'sandwich');
+	(16, 'NOT AVAILABLE', 'Pasta', '123', 'zxczxczasdsad', 20.00, 'pasta'),
+	(17, 'AVAILABLE', 'Banana Split', 'asd', 'jknkjfbsdjbjkbf', 50.00, 'bananasplit'),
+	(18, 'AVAILABLE', 'Hot Choco', '123', 'lkjjnjknkjnjn', 15.00, 'hotchoco'),
+	(19, 'AVAILABLE', 'Shake', 'asd', 'zxczxczxc', 25.00, 'shakes'),
+	(20, 'AVAILABLE', 'Sandwich', '123', 'asannssad', 25.00, 'sandwich');
 /*!40000 ALTER TABLE `tbl_product` ENABLE KEYS */;
+
+
+-- Dumping structure for table the_coffee_table.tbl_rate
+DROP TABLE IF EXISTS `tbl_rate`;
+CREATE TABLE IF NOT EXISTS `tbl_rate` (
+  `itemno` int(11) NOT NULL,
+  `rateCount` int(10) unsigned NOT NULL DEFAULT '0',
+  `maxRate` float unsigned DEFAULT '0',
+  `totalRate` float unsigned DEFAULT '0',
+  `percentage` float unsigned DEFAULT '0',
+  KEY `itemno` (`itemno`),
+  CONSTRAINT `FK_tbl_rate_tbl_product` FOREIGN KEY (`itemno`) REFERENCES `tbl_product` (`itemno`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- Dumping data for table the_coffee_table.tbl_rate: ~5 rows (approximately)
+/*!40000 ALTER TABLE `tbl_rate` DISABLE KEYS */;
+INSERT IGNORE INTO `tbl_rate` (`itemno`, `rateCount`, `maxRate`, `totalRate`, `percentage`) VALUES
+	(16, 8, 40, 12.5, 0),
+	(17, 10, 50, 42, 4.2),
+	(18, 3, 15, 6.5, 0),
+	(19, 4, 20, 17.5, 4.5),
+	(20, 4, 20, 5.5, 0);
+/*!40000 ALTER TABLE `tbl_rate` ENABLE KEYS */;
 
 
 -- Dumping structure for table the_coffee_table.tbl_staff_account
@@ -166,6 +214,17 @@ CREATE TABLE IF NOT EXISTS `tbl_staff_account` (
 -- Dumping data for table the_coffee_table.tbl_staff_account: 0 rows
 /*!40000 ALTER TABLE `tbl_staff_account` DISABLE KEYS */;
 /*!40000 ALTER TABLE `tbl_staff_account` ENABLE KEYS */;
+
+
+-- Dumping structure for trigger the_coffee_table.create-rate
+DROP TRIGGER IF EXISTS `create-rate`;
+SET @OLDTMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_ALL_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER';
+DELIMITER //
+CREATE TRIGGER `create-rate` AFTER INSERT ON `tbl_product` FOR EACH ROW BEGIN
+	INSERT into tbl_rate(itemno)VALUES(new.itemno);
+END//
+DELIMITER ;
+SET SQL_MODE=@OLDTMP_SQL_MODE;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
