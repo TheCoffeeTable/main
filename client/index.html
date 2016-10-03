@@ -102,14 +102,14 @@
                                 <div class="col-md-12">
                                 	<div class="alert alert-success" role="alert">{{y.status}}</div>
                                 </div>
-                                <div class="col-md-6 ">
+                                <div class="col-md-6 " ng-show="y.status=='AVAILABLE'">
                                 	<button type="button" ng-click="addItem(y.itemno,y.name,qty,y.price*qty,TableNumber)" class="btn btn-primary glyphicon glyphicon-play-circle"> ADD to Cart</button>
                                    
                                 </div>
                                 <br>
                                 <div class="col-md-4">
-                                	<p>Rate me : </p><ng-rate-it ng-model="rate" rated="rateItem(y.itemno,rate)"></ng-rate-it>
-                                    {{rate}}
+                                	<p>Rate me : </p><ng-rate-it ng-model="Xrate" rated="rateItem()"></ng-rate-it>
+                                    {{Xrate}}
                                 </div>
                                 
                             </div>
