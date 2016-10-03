@@ -44,7 +44,7 @@ app.controller('CoffeeCtrl',function($scope,$http){
 		$http.post('rate.php', {itemno:x,rate:y}) 
 			.success(function(data){
 			window.alert("Great! Thank you for rating me!");
-			window.location.reload();
+			//window.location.reload();
 		});
 	}
 	
