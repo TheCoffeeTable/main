@@ -188,11 +188,11 @@ CREATE TABLE IF NOT EXISTS `tbl_rate` (
 -- Dumping data for table the_coffee_table.tbl_rate: ~5 rows (approximately)
 /*!40000 ALTER TABLE `tbl_rate` DISABLE KEYS */;
 INSERT IGNORE INTO `tbl_rate` (`itemno`, `rateCount`, `maxRate`, `totalRate`, `percentage`) VALUES
-	(16, 8, 40, 12.5, 0),
+	(16, 9, 45, 15, 1.66667),
 	(17, 10, 50, 42, 4.2),
-	(18, 3, 15, 6.5, 0),
+	(18, 5, 25, 11.5, 2.3),
 	(19, 4, 20, 17.5, 4.5),
-	(20, 4, 20, 5.5, 0);
+	(20, 5, 25, 9.5, 1.9);
 /*!40000 ALTER TABLE `tbl_rate` ENABLE KEYS */;
 
 
