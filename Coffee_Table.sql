@@ -125,26 +125,15 @@ CREATE TABLE IF NOT EXISTS `tbl_orders` (
   `qty` int(11) DEFAULT NULL,
   `price` decimal(10,2) DEFAULT NULL,
   PRIMARY KEY (`orderNo`)
-) ENGINE=MyISAM AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=20 DEFAULT CHARSET=latin1;
 
 -- Dumping data for table the_coffee_table.tbl_orders: 15 rows
 /*!40000 ALTER TABLE `tbl_orders` DISABLE KEYS */;
 INSERT IGNORE INTO `tbl_orders` (`orderNo`, `TableNo`, `productNo`, `name`, `qty`, `price`) VALUES
-	(1, 1, 'qqq', NULL, 1, 19.00),
-	(2, 1, 'asd', NULL, 1, 19.00),
-	(3, 1, '2', NULL, 1, 19.00),
-	(4, 1, '4', NULL, 1, 19.00),
-	(5, 1, 'qqq', '2', 1, 19.00),
-	(6, 1, 'ghjgh', '4', 1, 19.00),
-	(7, 1, 'ghjgh', '5', 1, 19.00),
-	(8, 1, 'asd', '1', 1, 19.00),
-	(9, 1, 'qqq', '2', 1, 19.00),
-	(10, 1, 'ghjgh', '4', 1, 19.00),
-	(11, 1, '2', 'qqq', 1, 19.00),
-	(12, 1, '4', 'ghjgh', 1, 19.00),
-	(13, 1, '5', 'ghjgh', 1, 19.00),
-	(14, 1, '18', 'Hot Choco', 1, 15.00),
-	(15, 1, '20', 'Sandwich', 1, 25.00);
+	(19, 1, '19', 'Shake', 1, 25.00),
+	(18, 1, '17', 'Banana Split', 1, 50.00),
+	(17, NULL, '18', 'Hot Choco', 2, 30.00),
+	(16, NULL, '16', 'Pasta', 1, 20.00);
 /*!40000 ALTER TABLE `tbl_orders` ENABLE KEYS */;
 
 
@@ -162,7 +151,7 @@ CREATE TABLE IF NOT EXISTS `tbl_product` (
   KEY `itemno` (`itemno`)
 ) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
 
--- Dumping data for table the_coffee_table.tbl_product: ~5 rows (approximately)
+-- Dumping data for table the_coffee_table.tbl_product: ~4 rows (approximately)
 /*!40000 ALTER TABLE `tbl_product` DISABLE KEYS */;
 INSERT IGNORE INTO `tbl_product` (`itemno`, `status`, `name`, `categoryname`, `description`, `price`, `imgURL`) VALUES
 	(16, 'NOT AVAILABLE', 'Pasta', '123', 'zxczxczasdsad', 20.00, 'pasta'),
@@ -214,6 +203,21 @@ CREATE TABLE IF NOT EXISTS `tbl_staff_account` (
 -- Dumping data for table the_coffee_table.tbl_staff_account: 0 rows
 /*!40000 ALTER TABLE `tbl_staff_account` DISABLE KEYS */;
 /*!40000 ALTER TABLE `tbl_staff_account` ENABLE KEYS */;
+
+
+-- Dumping structure for table the_coffee_table.tbl_tableno
+DROP TABLE IF EXISTS `tbl_tableno`;
+CREATE TABLE IF NOT EXISTS `tbl_tableno` (
+  `tblno` int(11) NOT NULL AUTO_INCREMENT,
+  `IP` varchar(50) NOT NULL,
+  PRIMARY KEY (`tblno`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+-- Dumping data for table the_coffee_table.tbl_tableno: 0 rows
+/*!40000 ALTER TABLE `tbl_tableno` DISABLE KEYS */;
+INSERT IGNORE INTO `tbl_tableno` (`tblno`, `IP`) VALUES
+	(1, '::1');
+/*!40000 ALTER TABLE `tbl_tableno` ENABLE KEYS */;
 
 
 -- Dumping structure for trigger the_coffee_table.create-rate

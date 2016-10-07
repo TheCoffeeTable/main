@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>The Coffee Table</title>
+    <link rel="stylesheet" href="../libs/bower_components/angular-material/angular-material.min.css">
+    <link href="../libs/bower_components/material-design-icons/iconfont/material-icons.css" rel="stylesheet">
+    <script src="../libs/bower_components/angular/angular.min.js"></script>
+    <script src="../libs/bower_components/angular-animate/angular-animate.min.js"></script>
+    <script src="../libs/bower_components/angular-aria/angular-aria.min.js"></script>
+    <script src="../libs/bower_components/angular-messages/angular-messages.min.js"></script>
+    <script src="../libs/bower_components/angular-material/angular-material.min.js"></script>
+    <script src="script2.js"></script>
+</head>
+<body ng-cloak layout="column" ng-app="CoffeeApp" ng-controller="CoffeeCtrl">
+    
+
+     <md-toolbar md-scroll-shrink ng-if="true" class="md-warn md-hue-2">
+        <div class="md-toolbar-tools">
+        <md-button class="md-icon-button" aria-label="Settings" ng-click="toggleLeft()">
+            <md-icon><i class="material-icons">&#xe5d2;</i></md-icon>
+        </md-button>
+        <h3>
+            <span>{{title}}</span>
+        </h3>
+        <!--<md-input-container class="md-block" ng-model="query">
+                  <label>Search here</label>
+                  <input type="text" ng-model="query">
+                  
+        </md-input-container>-->
+        <md-button ng-click="openCart()" class="md-warn md-raised" hide-gt-md>
+            <md-icon><i class="material-icons">&#xe854;</i></md-icon>
+        </md-button>
+        </div>
+    </md-toolbar>
+    <section layout="row" flex>
+         
+    <md-sidenav
+        class="md-sidenav-left"
+        md-component-id="left"
+        md-is-locked-open="$mdMedia('gt-md')"
+        md-whiteframe="4">
+
+        <md-toolbar class="md-warn md-hue-2">
+            <div class="md-toolbar-tools">
+                <h3 class="md-toolbar-tools">{{title}}</h3>
+                <div ng-hide="isOrderEmpty()">
+                <md-button class="md-toolbar-tools" ng-click="close()" class="md-primary" hide-gt-md>
+                    <md-icon><i class="material-icons">&#xe5cd;</i></md-icon>
+                </md-button>
+                </div>
+            </div>
+            
+        </md-toolbar>
+        
+        <md-content layout-padding>
+        <ul>
+            <li ng-click="query='';close()"><h1>Show All</h1></li>
+            <div ng-repeat="x in categories">
+            <li ng-click="filterQuery(x.categoryname)"><h1>{{x.categoryname}}</h1></li>
+            </div>
+        </ul>
+        <p hide show-gt-md>
+            This sidenav is locked open on your device. To go back to the default behavior,
+            narrow your display.
+        </p>
+        </md-content>
+
+    </md-sidenav>
+    
+    <md-content flex layout-padding>
+        
+        <div layout="column" layout-align="top center">
+        <!-- contents -->
+
+       
+
+        <div ng-repeat="x in categories | filter: query">
+        <h2>{{x.categoryname}}</h2>
+        <div ng-repeat="y in item | filter: y.categoryname=x.categoryname | filter: query" >
+            <md-card>
+                <img ng-src="../libs/img/{{y.imgURL}}.jpg" class="md-card-image" alt="Learn HTML5">
+                
+                <md-card-title>
+                    <md-card-title-text>
+                    <span class="md-headline">{{y.name}}</span>
+                    </md-card-title-text>
+                </md-card-title>
+                <md-card-content>
+                    <p>{{y.description}}</p>
+                    <p>for only {{y.price}}</p>
+                    <p>{{y.price}} X {{qty}} -- <strong>{{y.price * qty}}.00</strong></p>
+                    Quantity: <input style="width:60px;" type="number" ng-model="qty" ng-init="qty = 1"/>
+                </md-card-content>
+                <md-card-actions layout="row" layout-align="start center">
+                    <md-card-icon-actions>
+                    <md-button class=" md-warn md-hue-2 material-icons" ng-click="addItem(y.itemno,y.name,qty,y.price*qty,tableNo.tblno)" aria-label="icon">add
+                      
+                    </md-button>
+                    </md-card-icon-actions>
+                </md-card-actions>
+                
+            </md-card>
+        
+        </div>
+        </div>
+        </div>
+
+        <div flex></div>
+
+    </md-content>
+
+    </section>
+
+</body>
+</html>
