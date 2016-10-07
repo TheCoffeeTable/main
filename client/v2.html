@@ -40,8 +40,8 @@
         class="md-sidenav-left"
         md-component-id="left"
         md-is-locked-open="$mdMedia('gt-md')"
-        md-whiteframe="4">
-
+        md-whiteframe="4" hide-gt-md>
+       
         <md-toolbar class="md-warn md-hue-2">
             <div class="md-toolbar-tools">
                 <h3 class="md-toolbar-tools">{{title}}</h3>
@@ -91,7 +91,7 @@
                     <p>{{y.description}}</p>
                     <p>for only {{y.price}}</p>
                     <p>{{y.price}} X {{qty}} -- <strong>{{y.price * qty}}.00</strong></p>
-                    Quantity: <input style="width:60px;" type="number" ng-model="qty" ng-init="qty = 1"/>
+                    Quantity: <input style="width:60px;" type="number" min="1" max="12" ng-model="qty" ng-init="qty = 1"/>
                 </md-card-content>
                 <md-card-actions layout="row" layout-align="start center">
                     <md-card-icon-actions>
