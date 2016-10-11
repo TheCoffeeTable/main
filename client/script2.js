@@ -1,6 +1,6 @@
 'use strict';
-var app = angular.module('CoffeeApp',['ngMaterial']);
-app.controller('CoffeeCtrl',function($scope,$http, $timeout, $mdSidenav, $log,$mdDialog){
+var app = angular.module('CoffeeApp',['ngMaterial','ngRateIt','angular-toast']);
+app.controller('CoffeeCtrl',function($scope,$http, $timeout, $mdSidenav, $log,$mdDialog,$mdToast,toast){
     $scope.title = "The Coffee Table";
     $scope.toggleLeft = buildDelayedToggler('left');
     $scope.toggleRight = buildToggler('right');
@@ -45,10 +45,51 @@ app.controller('CoffeeCtrl',function($scope,$http, $timeout, $mdSidenav, $log,$m
       }
     }
 
+
+    $scope.notify = function(e){
+
+            return toast.show(e || 'Alert')
+
+        }
+
+
     $scope.filterQuery = function(e){
       $scope.query = e;
       $scope.close();
     }
+
+
+    $scope.showSurvey = function(event) {
+      $scope.close();
+        $mdDialog.show({
+          clickOutsideToClose: true,
+          scope: $scope,        
+          preserveScope: true,           
+          templateUrl: 'survey.tmpl.html',
+          controller: function DialogController($scope, $mdDialog) {
+              $scope.closeDialog = function() {
+                $scope.rateSurvey($scope.xForm.answer)
+                $mdDialog.hide();
+              }
+
+              $http.get("get-survey.php")
+                .then(function(response) {
+                  $scope.surveyList = response.data;
+                  console.log($scope.surveyList)
+              });
+              
+
+              $scope.rateSurvey = function(x,y){
+                $http.post('post-survey.php', {itemno:x,rate:y}) 
+                  .success(function(data){
+                  window.alert("Great! Thank you for rating me!");
+                  //window.location.reload();
+                });
+              }
+
+          }
+        });
+    };
 
   $http.get("get-ip.php")
 		.then(function(response) {
@@ -106,8 +147,9 @@ app.controller('CoffeeCtrl',function($scope,$http, $timeout, $mdSidenav, $log,$m
 	$scope.order = [];
 	$scope.addItem = function(w,x,y,z,t){
 		$scope.order.push({itemno:w,name:x,qty:y,price:z,tblno:t});
-		
+		//$scope.notify("<strong>"+x+"</strong> has been added to cart!");
 		$scope.total = $scope.total + z;
+    $mdToast.show($mdToast.simple().textContent(x+" has been added to cart!"));
 	};
 	
 	$scope.dynamicPopover = {
@@ -140,6 +182,11 @@ app.controller('CoffeeCtrl',function($scope,$http, $timeout, $mdSidenav, $log,$m
 			//window.location.reload();
 		});
 	}
+
+  
+
+
+
 	$scope.close = function () {
       // Component lookup should always be available since we are not using `ng-if`
       $mdSidenav('left').close()
