@@ -1,6 +1,12 @@
 
 var app = angular.module('adminApp',['ngMaterial','ngRoute']);
-app.config(function($routeProvider) {
+app.config(function($routeProvider,$mdThemingProvider) {
+        $mdThemingProvider.theme('customTheme') 
+                  .primaryPalette('orange')
+                  .accentPalette('blue')
+                  .warnPalette('red');
+               
+
         $routeProvider
 
             // route for the home page
