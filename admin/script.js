@@ -1,9 +1,10 @@
 
 var app = angular.module('adminApp',['ngMaterial','ngRoute']);
+app.value('customer',{})
 app.config(function($routeProvider,$mdThemingProvider) {
         $mdThemingProvider.theme('customTheme') 
                   .primaryPalette('orange')
-                  .accentPalette('blue')
+                  .accentPalette('green')
                   .warnPalette('red');
                
 
@@ -13,6 +14,12 @@ app.config(function($routeProvider,$mdThemingProvider) {
             .when('/', {
                 templateUrl : 'index.html',
                 controller  : 'adminApp'
+            })
+
+            // route for the monitoring page
+            .when('/monitor', {
+                templateUrl : 'pages/monitoring.html',
+                controller  : 'monitorCtrl'
             })
 
             // route for the about page
@@ -41,11 +48,49 @@ app.controller('adminCtrl',function($scope,$http, $timeout, $mdSidenav, $log,$md
         });
 
     };
+
+   
 })
 
 // Controller ng transactions page
-app.controller('transCtrl',function($scope,$http){
+app.controller('transCtrl',function($scope,$http,$mdBottomSheet){
+    $scope.openBottomSheet = function() {
+        $mdBottomSheet.show({
+	      templateUrl: 'template.html',
+	      controller: 'GridBottomSheetCtrl',
+	      targetEvent: $event
+	    }).then(function(clickedItem) {
+	      //$scope.alert = clickedItem.name + ' clicked!';
+	    });
+    };
+})
 
+//Controller ng monitoring page
+app.controller('monitorCtrl',function(customer,$scope,$http,$mdBottomSheet){
+    $http.get("get-table.php")
+            .then(function(response) {
+                $scope.order = response.data;
+        });
+    
+    $scope.showListBottomSheet = function(e) {
+        customer.table = e;
+        
+        $mdBottomSheet.show({
+	      templateUrl: 'pages/bottomsheet.html',
+          controller: 'sheetCtrl'
+	    }).then(function(clickedItem) {
+	      //$scope.alert = clickedItem.name + ' clicked!';
+	    });
+    };
+})
+
+app.controller('sheetCtrl',function(customer,$scope,$http){
+    $scope.me = customer.table;
+    $http.post('get-order.php', {item:$scope.me}) 
+        .success(function(data){
+            $scope.order = data;
+            console.log($scope.order)
+    });
 })
 
 

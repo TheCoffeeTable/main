@@ -1,0 +1,23 @@
+<md-bottom-sheet class="md-grid">
+    Order List for Table #{{me}}
+    <div layout="row">
+        <div layout="column">
+        <md-button flex="3" class="md-raised md-warn"><i class="material-icons">&#xe877;</i></md-button>
+        </div>
+    </div>
+    
+    <md-menu>
+        <md-menu-item ng-repeat="x in order" >
+            <md-button ng-click="ctrl.menuItemClick($index)">
+            <div layout="row">
+                <md-icon md-menu-align-target class="material-icons"><i class="material-icons">&#xE05F;</i></md-icon>
+                <p flex>{{x.productNo}}</p>
+                <p flex>{{x.name}}</p>
+                <p flex>x {{x.qty}}</p>
+                <p flex>{{x.price | currency : "&#8369; "}}</p>
+                <md-button class=" md-accent" ng-click="processFood(x.orderNo)"><i class="material-icons">&#xE86C;</i></md-button>
+            </div>
+            </md-button>
+        </md-menu-item>
+    </md-menu>
+</md-bottom-sheet>

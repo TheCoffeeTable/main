@@ -1,0 +1,23 @@
+<md-card>
+<md-card-content>
+    <h1>List of Tables that ordered:</h1>
+    <div layout="row">
+    <div flex="20"></div>
+    <div flex="60">
+    <div layout="column">
+    <div flex ng-repeat="x in order">
+        <md-card>
+            <div layout="row">
+            <md-subheader>Table #{{x.TableNo}}</md-subheader>
+            <span flex></span>
+            <md-button class="md-icon-button" aria-label="More" ng-click="showListBottomSheet(x.TableNo)">
+                <md-icon class="material-icons"><i class="material-icons">&#xE5D4;</i></md-icon>
+            </md-button>
+            </div>
+        </md-card>
+    </div>
+    </div>
+    </div>
+    </div>
+</md-card-content>
+</md-card>
