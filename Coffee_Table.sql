@@ -16,6 +16,16 @@ CREATE DATABASE IF NOT EXISTS `the_coffee_table` /*!40100 DEFAULT CHARACTER SET 
 USE `the_coffee_table`;
 
 
+-- Dumping structure for procedure the_coffee_table.all-tables
+DROP PROCEDURE IF EXISTS `all-tables`;
+DELIMITER //
+CREATE DEFINER=`root`@`localhost` PROCEDURE `all-tables`()
+BEGIN
+	SELECT distinct(TableNo) from tbl_orders order by TableNo asc;
+END//
+DELIMITER ;
+
+
 -- Dumping structure for procedure the_coffee_table.get-categories
 DROP PROCEDURE IF EXISTS `get-categories`;
 DELIMITER //
@@ -37,6 +47,16 @@ BEGIN
 	on
 	p.itemno = r.itemno
 	order by categoryname asc;
+END//
+DELIMITER ;
+
+
+-- Dumping structure for procedure the_coffee_table.get-survey
+DROP PROCEDURE IF EXISTS `get-survey`;
+DELIMITER //
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get-survey`()
+BEGIN
+	SELECT * from tbl_survey limit 10;
 END//
 DELIMITER ;
 
@@ -125,15 +145,16 @@ CREATE TABLE IF NOT EXISTS `tbl_orders` (
   `qty` int(11) DEFAULT NULL,
   `price` decimal(10,2) DEFAULT NULL,
   PRIMARY KEY (`orderNo`)
-) ENGINE=MyISAM AUTO_INCREMENT=20 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
 
--- Dumping data for table the_coffee_table.tbl_orders: 15 rows
+-- Dumping data for table the_coffee_table.tbl_orders: 5 rows
 /*!40000 ALTER TABLE `tbl_orders` DISABLE KEYS */;
 INSERT IGNORE INTO `tbl_orders` (`orderNo`, `TableNo`, `productNo`, `name`, `qty`, `price`) VALUES
+	(20, 3, '19', 'Shake', 2, 50.00),
 	(19, 1, '19', 'Shake', 1, 25.00),
-	(18, 1, '17', 'Banana Split', 1, 50.00),
-	(17, NULL, '18', 'Hot Choco', 2, 30.00),
-	(16, NULL, '16', 'Pasta', 1, 20.00);
+	(18, 5, '17', 'Banana Split', 1, 50.00),
+	(17, 2, '18', 'Hot Choco', 2, 30.00),
+	(16, 2, '16', 'Pasta', 1, 20.00);
 /*!40000 ALTER TABLE `tbl_orders` ENABLE KEYS */;
 
 
@@ -151,7 +172,7 @@ CREATE TABLE IF NOT EXISTS `tbl_product` (
   KEY `itemno` (`itemno`)
 ) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
 
--- Dumping data for table the_coffee_table.tbl_product: ~4 rows (approximately)
+-- Dumping data for table the_coffee_table.tbl_product: ~5 rows (approximately)
 /*!40000 ALTER TABLE `tbl_product` DISABLE KEYS */;
 INSERT IGNORE INTO `tbl_product` (`itemno`, `status`, `name`, `categoryname`, `description`, `price`, `imgURL`) VALUES
 	(16, 'NOT AVAILABLE', 'Pasta', '123', 'zxczxczasdsad', 20.00, 'pasta'),
@@ -205,6 +226,33 @@ CREATE TABLE IF NOT EXISTS `tbl_staff_account` (
 /*!40000 ALTER TABLE `tbl_staff_account` ENABLE KEYS */;
 
 
+-- Dumping structure for table the_coffee_table.tbl_survey
+DROP TABLE IF EXISTS `tbl_survey`;
+CREATE TABLE IF NOT EXISTS `tbl_survey` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `question` text NOT NULL,
+  `averageRate` float DEFAULT NULL,
+  `rateCount` float DEFAULT NULL,
+  `maxRate` float DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+
+-- Dumping data for table the_coffee_table.tbl_survey: 10 rows
+/*!40000 ALTER TABLE `tbl_survey` DISABLE KEYS */;
+INSERT IGNORE INTO `tbl_survey` (`id`, `question`, `averageRate`, `rateCount`, `maxRate`) VALUES
+	(1, 'q1', NULL, NULL, NULL),
+	(2, 'q2', NULL, NULL, NULL),
+	(3, 'q3', NULL, NULL, NULL),
+	(4, 'q4', NULL, NULL, NULL),
+	(5, 'q5', NULL, NULL, NULL),
+	(6, 'q6', NULL, NULL, NULL),
+	(7, 'q7', NULL, NULL, NULL),
+	(8, 'q8', NULL, NULL, NULL),
+	(9, 'q9', NULL, NULL, NULL),
+	(10, 'q10', NULL, NULL, NULL);
+/*!40000 ALTER TABLE `tbl_survey` ENABLE KEYS */;
+
+
 -- Dumping structure for table the_coffee_table.tbl_tableno
 DROP TABLE IF EXISTS `tbl_tableno`;
 CREATE TABLE IF NOT EXISTS `tbl_tableno` (
@@ -213,7 +261,7 @@ CREATE TABLE IF NOT EXISTS `tbl_tableno` (
   PRIMARY KEY (`tblno`)
 ) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
--- Dumping data for table the_coffee_table.tbl_tableno: 0 rows
+-- Dumping data for table the_coffee_table.tbl_tableno: 1 rows
 /*!40000 ALTER TABLE `tbl_tableno` DISABLE KEYS */;
 INSERT IGNORE INTO `tbl_tableno` (`tblno`, `IP`) VALUES
 	(1, '::1');
